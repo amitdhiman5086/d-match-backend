@@ -13,8 +13,6 @@ chatRouter.get("/chat/:toUserId", userAuth, async (req, res) => {
   const userId = req.user._id;
 
   try {
-<<<<<<< HEAD
-=======
     const existingConnectionRequest = await ConnectionRequestModel.findOne({
       $or: [
         { fromUserId: userId, toUserId, requestStatus: "accept" },
@@ -28,7 +26,7 @@ chatRouter.get("/chat/:toUserId", userAuth, async (req, res) => {
       });
     }
 
->>>>>>> main
+
     let chat = await Chat.findOne({
       participants: { $all: [userId, toUserId] },
     }).populate({
