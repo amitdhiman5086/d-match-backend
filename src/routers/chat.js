@@ -1,6 +1,7 @@
 const express = require("express");
 const { userAuth } = require("../middleware/auth");
 const { Chat } = require("../models/chatSchema");
+const ConnectionRequestModel = require("../models/connectionRequest");
 
 const chatRouter = express.Router();
 
@@ -9,9 +10,18 @@ chatRouter.get("/chat/:toUserId", userAuth, async (req, res) => {
   const userId = req.user._id;
 
   try {
+    const existingConnectionRequest = await ConnectionRequestModel.findOne({
+      $or: [
+        { fromUserId: userId, toUserId, requestStatus: "accept" },
+        { fromUserId: toUserId, toUserId: userId, requestStatus: "accept" },
+      ],
+    });
 
-    const isFriends = 
-
+    if (!existingConnectionRequest) {
+      return res.status(400).json({
+        message: "NOT a Friend",
+      });
+    }
 
     let chat = await Chat.findOne({
       participants: { $all: [userId, toUserId] },
