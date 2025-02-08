@@ -1,0 +1,9 @@
+<<<<<<< HEAD
+node_modules
+
+*.env.env
+.env
+=======
+node_modules
+.env
+>>>>>>> parent of 7dfe901 (Ok)
