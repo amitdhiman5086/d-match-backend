@@ -4,7 +4,7 @@ const { Chat } = require("../models/chatSchema");
 const initializeSocket = (server) => {
   const io = socket(server, {
     cors: {
-      origin: ["http://13.60.18.36", "http://localhost:5173"], // Allow requests from React app
+      origin: ["https://d-match.onrender.com", "http://localhost:5173"], // Allow requests from React app
       credentials: true, // Allow cookies/auth
     },
   });
