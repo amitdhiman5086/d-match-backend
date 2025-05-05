@@ -15,11 +15,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://d-match-backend.onrender.com", "http://localhost:5173"], // Allow requests from React app
+    origin: ["https://d-match-frontend.onrender.com", "http://localhost:5173"], // Allow requests from React app
     credentials: true, // Allow cookies/auth
   })
 );
 dotenv.config();
+const PORT = process.env.PORT || 3000;
 
 app.use("/api", authRouter);
 app.use("/api", profileRouter);
@@ -34,8 +35,8 @@ connectDb()
   .then(() => {
     console.log("Database is Connected...");
 
-    server.listen(3000, () => {
-      console.log("Server is listening on port");
+    server.listen(PORT, () => {
+      console.log("Server is listening on port :" + PORT);
     });
   })
   .catch((err) => {
