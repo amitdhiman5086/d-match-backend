@@ -44,10 +44,13 @@ authRouter.post("/signUp", async (req, res) => {
     const userData = data.toObject();
     delete userData.password;
 
-
     res.cookie("token", token, {
-      expires: new Date(Date.now() + 720 * 3600000),
+      httpOnly: true,              // Prevents JavaScript access (security)
+      secure: true,                // Required for HTTPS (Render uses HTTPS)
+      sameSite: "None",            // Allows cross-site cookies
+      expires: new Date(Date.now() + 720 * 3600000), // 30 days
     });
+    
     res.json({
       message: userData.firstName + " is Registered Successfully ",
       data: userData,
@@ -77,7 +80,13 @@ authRouter.post("/login", async (req, res) => {
   const userData = user.toObject();
   delete userData.password;
 
-  res.cookie("token", token, { expires: new Date(Date.now() + 720 * 3600000) });
+  res.cookie("token", token, {
+    httpOnly: true,              // Prevents JavaScript access (security)
+    secure: true,                // Required for HTTPS (Render uses HTTPS)
+    sameSite: "None",            // Allows cross-site cookies
+    expires: new Date(Date.now() + 720 * 3600000), // 30 days
+  });
+  
   res.json({
     message: "Authenticated ..",
     data: userData,
@@ -85,8 +94,10 @@ authRouter.post("/login", async (req, res) => {
 });
 
 authRouter.post("/logout", async (req, res) => {
-  res.cookie("token", null, {
-    expires: new Date(Date.now()),
+  res.clearCookie("token", {
+    httpOnly: true,              // Prevents JavaScript access (security)
+    secure: true,                // Required for HTTPS (Render uses HTTPS)
+    sameSite: "None",            // Allows cross-site cookies
   });
   res.json({
     message: "Logout successfully.",
