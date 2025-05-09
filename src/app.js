@@ -10,7 +10,7 @@ const http = require("http");
 const cors = require("cors");
 const initializeSocket = require("./utils/socket.js");
 const { chatRouter } = require("./routers/chat.js");
-const { default: job } = require("./utils/cron.js");
+const job = require("./utils/cron.js");
 job.start();
 const app = express();
 app.use(express.json());

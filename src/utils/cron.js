@@ -3,6 +3,7 @@ import https from "https";
 const URL = "https://d-match-backend.onrender.com/api";
 const URL2 = "https://d-match-frontend.onrender.com";
 const job = new cron.CronJob("*/10 * * * *", function () {
+	console.log("Cron job running every 10 minutes")
 	https
 		.get(URL, (res) => {
 			if (res.statusCode === 200) {
@@ -27,4 +28,4 @@ const job = new cron.CronJob("*/10 * * * *", function () {
 		});
 });
 
-export default job;
+job.start();
